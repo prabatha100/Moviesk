@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- මේ ටික Facebook Player එකට -->
+    <meta property="og:type" content="video.other" />
+    <meta property="og:site_name" content="Crezie Mv" />
+    <meta id="og-title" property="og:title" content="Crezie Mv Film" />
+    <meta id="og-desc" property="og:description" content="Watch Free Public Domain Film on Crezie Mv" />
+    <meta id="og-image" property="og:image" content="https://i.ibb.co/6b8m0p0/crezie-mv-logo.jpg" />
+    <meta id="og-video" property="og:video" content="" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="1280" />
+    <meta property="og:video:height" content="720" />
+    
+    <title id="page-title">Crezie Mv Player</title>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin:0; padding:0; }
+        .container { max-width: 900px; margin: auto; padding: 20px; }
+        video { width: 100%; border-radius: 12px; box-shadow: 0 0 20px #ff0000; }
+        h1 { color: #ffcc00; }
+        .btn { background: #1877F2; color: white; padding: 12px 20px; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="film-title">Loading...</h1>
+        <video id="player" controls autoplay poster="">
+            <source id="video-src" src="" type="video/mp4">
+        </video>
+        <br>
+        <a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=" id="share-btn" target="_blank">📤 Facebook එකේ Share කරන්න</a>
+        <p>Powered by Crezie Mv - Public Domain Films</p>
+    </div>
+
+<script>
+// URL එකෙන් film ID එක ගන්න ?id=Charlie_Chaplin...
+const urlParams = new URLSearchParams(window.location.search);
+const filmId = urlParams.get('id');
+
+if (!filmId) {
+    document.getElementById('film-title').innerText = "Film ID එකක් නෑ! Link එක වැරදියි.";
+} else {
+    const videoUrl = `https://archive.org/download/${filmId}/${filmId}.mp4`;
+    const watchUrl = `https://archive.org/details/${filmId}`;
+    const title = filmId.replace(/_/g, " ").replace(/-/g, " ");
+
+    document.getElementById('film-title').innerText = "🎬 " + title;
+    document.getElementById('page-title').innerText = title + " - Crezie Mv";
+    document.getElementById('video-src').src = videoUrl;
+    document.getElementById('player').load();
+    
+    // OG Tags Update (Facebook crawler එකට නෙවෙයි, userට පේන්න)
+    document.getElementById('og-title').setAttribute("content", title);
+    document.getElementById('og-video').setAttribute("content", videoUrl);
+    
+    // Share button එක update කරනවා
+    document.getElementById('share-btn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+}
+</script>
+</body>
+</html>
